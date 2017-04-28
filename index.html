@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>TodoMVC-shimily</title>
+		<link rel="stylesheet" href="node_modules/todomvc-common/base.css">
+		<link rel="stylesheet" href="node_modules/todomvc-app-css/index.css">
+		<!-- CSS overrides - remove if you don't need it -->
+		<link rel="stylesheet" href="css/app.css">
+	</head>
+	<body ng-app="MyTodoMvc">
+		<section class="todoapp" ng-controller="mainCtr">
+			<header class="header">
+				<h1>todos</h1>
+				<form  ng-submit="add()">
+					<input class="new-todo" placeholder="What needs to be done?" autofocus  checked ng-model="text">
+				</form>
+
+			</header>
+
+			<section class="main">
+				<input class="toggle-all" type="checkbox" >
+				<label for="toggle-all" ng-click="toggleAll()">标记已完成项目</label>
+				<ul class="todo-list">  <!--class="editing"-->
+					<li ng-repeat="item in data" ng-class="{completed:item.completed,editing:item.id===curEditingId}">
+						<div class="view" >
+							<input class="toggle" type="checkbox" ng-model="item.completed">
+							<label ng-dblclick="editing(item.id)"><i>{{item.id}}</i> {{item.txt}}</label>
+							<button class="destroy" ng-click="remove(item.id)"></button>
+						</div>
+						<form ng-submit="save()">
+							<input class="edit" ng-model="item.txt">
+						</form>
+					</li>
+
+
+				</ul>
+			</section>
+
+			<footer class="footer">
+
+				<span class="todo-count"><strong>{{data.length}}</strong>项目</span>
+
+				<ul class="filters">
+					<li>
+						<a class="selected" href="#/">所有</a>
+					</li>
+					<li>
+						<a href="#/active">未完成</a>
+					</li>
+					<li>
+						<a href="#/completed">已完成</a>
+					</li>
+				</ul>
+				<!-- Hidden if no completed items are left ↓ -->
+				<button class="clear-completed" ng-click="clear()" ng-show="exitCompleted()">清空已完成的项目</button>
+			</footer>
+		</section>
+
+		<!-- Scripts here. Don't remove ↓ -->
+		<script src="js/angular.min.js"></script>
+		<script src="node_modules/todomvc-common/base.js"></script>
+		<script src="js/app.js"></script>
+	</body>
+</html>
