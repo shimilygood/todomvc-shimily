@@ -44,13 +44,13 @@
 
 				<ul class="filters">
 					<li>
-						<a class="selected" href="#/">所有</a>
+						<a ng-class="{selected:selector.completed == undefind}" href="#/">所有</a>
 					</li>
 					<li>
-						<a href="#/active">未完成</a>
+						<a ng-class="{selected:selector.completed == false}" href="#/active">未完成</a>
 					</li>
 					<li>
-						<a href="#/completed">已完成</a>
+						<a ng-class="{selected:selector.completed == true}" href="#/completed">已完成</a>
 					</li>
 				</ul>
 				<!-- Hidden if no completed items are left ↓ -->

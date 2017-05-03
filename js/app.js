@@ -114,12 +114,14 @@
 		$scope.$location = $location;
 
 
-		$scope.$watch('$location.path()',function (now,old) {
+		$scope.$watch('$location.$$hash',function (now,old) {
 			switch (now){
 				case '/active':
+
 					$scope.selector={completed:false};
 					break;
 				case '/completed':
+
 					$scope.selector={completed:true};
 					break;
 				default:
