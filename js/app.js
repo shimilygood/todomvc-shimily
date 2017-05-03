@@ -3,7 +3,7 @@
 
 	var myApp = angular.module('MyTodoMvc',[]);
 
-	myApp.controller('mainCtr',['$scope',function($scope){
+	myApp.controller('mainCtr',['$scope','$location',function($scope,$location){
 		$scope.text = '';  //文本框
 		$scope.data = [
 			 {id:1,txt:'学习',completed:true}
@@ -109,8 +109,42 @@
 		}
 
 
+		//状态筛选
+		$scope.selector={};
+		$scope.$location = $location;
+
+
+		$scope.$watch('$location.path()',function (now,old) {
+			switch (now){
+				case '/active':
+					$scope.selector={completed:false};
+					break;
+				case '/completed':
+					$scope.selector={completed:true};
+					break;
+				default:
+					$scope.selector={}
+					break;
+			}
+		});
+
+
+
+		//1.拿到锚点值
+
+
+		//2.根据锚点值对selector做变换
+
+
+
+
 	}])
 
+	myApp.controller('rowCtr',['$scope','$filter','$location',function ($scope,$filter,$location) {
+		$scope.name='shimilygood123456';
+		$scope.ceshi = $filter('limitTo')($scope.name,10,2);
 
+
+	}]);
 
 })(angular);
