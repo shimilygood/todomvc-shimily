@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body ng-app="app">
+
+	<div ng-view></div>
+
+	<ul>
+		<li>
+			<a href="#!/a">所有aa</a>
+		</li>
+		<li>
+			<a href="#!/b">未完成bb</a>
+		</li>
+		<li>
+			<a href="#!/c">已完成cc</a>
+		</li>
+	</ul>
+
+<script src="../js/angular.min.js"></script>
+<script src="../js/angular-route.js"></script>
+<script>
+   //创建模块
+	var app = angular.module('app',['ngRoute']);
+   //路由
+	app.config(['$routeProvider',function ($routeProvider) {
+		//配置路由
+	    $routeProvider
+
+				.when('/students/:name?',{
+					controller: 'StudentsController',
+					templateUrl: 'views/a.html'
+				})
+				.when('/a',{
+					controller: 'AController',
+					templateUrl: 'views/a.html'
+				})
+				.when('/b',{
+					controller: 'BController',
+					templateUrl: 'views/a.html'
+				})
+				.when('/c',{
+					controller:'CController',
+					templateUrl:'views/a.html'
+				})
+				;
+//		.otherwise({
+//			// 跳转到一个地址
+//			redirectTo: '/a'
+//		})
+
+	}]);
+
+   app.controller('StudentsController',['$scope','$routeParams',function ($scope,$routeParams) {
+	   $scope.s_name=$routeParams.name;
+
+   }]);
+
+	app.controller('AController',['$scope',function ($scope) {
+		$scope.title='A控制器...';
+
+	}]);
+
+
+	app.controller('BController',['$scope',function ($scope) {
+		$scope.title='B控制器...';
+	}]);
+
+	app.controller('CController',['$scope',function ($scope) {
+		$scope.title='C控制器...';
+	}]);
+
+</script>
+</body>
+</html>

@@ -1,9 +1,23 @@
 (function (angular) {
 	'use strict';
 
-	var myApp = angular.module('MyTodoMvc',[]);
+	var myApp = angular.module('MyTodoMvc',['ngRoute']);
 
-	myApp.controller('mainCtr',['$scope','$location',function($scope,$location){
+	//路由
+	myApp.config(['$routeProvider',function ($routeProvider) {
+		$routeProvider
+			.when('/:status?',{
+				controller:"mainCtr",
+				templateUrl:'tpl/index_tpl.html'
+			})
+			.otherwise({
+				redirectTo: '/'
+			});
+	}]);
+
+
+
+	myApp.controller('mainCtr',['$scope','$location','$routeParams','$route',function($scope,$location,$routeParams,$route){
 		$scope.text = '';  //文本框
 		$scope.data = [
 			 {id:1,txt:'学习',completed:true}
@@ -112,23 +126,23 @@
 		//状态筛选
 		$scope.selector={};
 		$scope.$location = $location;
+		var status = $routeParams.status;
+			console.log($routeParams)
+			console.log(status)
 
+		switch (status){
+			case 'active':
+				$scope.selector={completed:false};
+				break;
+			case 'completed':
+				$scope.selector={completed:true};
+				break;
+			default:
+				$route.updateParams({status:''});   //当输入的锚点不是想要的锚点时，自动跳转到默认锚点
+				$scope.selector={}
+				break;
+		}
 
-		$scope.$watch('$location.$$hash',function (now,old) {
-			switch (now){
-				case '/active':
-
-					$scope.selector={completed:false};
-					break;
-				case '/completed':
-
-					$scope.selector={completed:true};
-					break;
-				default:
-					$scope.selector={}
-					break;
-			}
-		});
 
 
 
